@@ -1,0 +1,119 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1c2230;
+  --muted: #5f6b7d;
+  --border: #dde1e8;
+  --accent: #2458d6;
+  --ok: #17803d;
+  --warn: #a15c00;
+  --err: #c0262d;
+  --code-bg: #f0f2f6;
+  --app-width: 480px; /* mobile-only: the page and the SDK overlay never grow wider than a phone */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0 auto; max-width: var(--app-width); min-height: 100vh; min-height: 100dvh;
+  background: var(--bg); color: var(--text); font-size: 15px; overflow-x: hidden;
+}
+/* On a desktop the page shows as a phone-width column. */
+@media (min-width: 560px) {
+  html { background: #d5dae2; }
+  body { box-shadow: 0 0 0 1px var(--border), 0 8px 40px rgb(0 0 0 / 0.15); }
+}
+.desktop-note { display: none; margin: 0; padding: 8px 16px; background: #eef3ff; color: var(--accent); font-size: 13px; }
+@media (min-width: 560px) { .desktop-note { display: block; } }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top));
+  background: var(--card); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.topbar h1 { font-size: 17px; margin: 0; }
+
+.layout {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; min-width: 0; }
+.card h2 { font-size: 16px; margin: 0 0 8px; }
+.card h3 { font-size: 13px; margin: 16px 0 6px; }
+
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.row.between { justify-content: space-between; }
+.muted { color: var(--muted); }
+.help { background: #fff6e5; border: 1px solid #f1d49b; color: #6b4300; padding: 8px 10px; border-radius: 6px; }
+
+.btn {
+  border: 1px solid var(--border); background: var(--card); color: var(--text);
+  min-height: 44px; padding: 8px 14px; border-radius: 8px; font: inherit; cursor: pointer;
+  touch-action: manipulation;
+}
+.btn.block { width: 100%; }
+.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--code-bg); font-size: 12px; font-weight: 600; }
+.pill[data-state='ok'] { background: #e3f4e8; color: var(--ok); }
+.pill[data-state='warn'] { background: #fff1dc; color: var(--warn); }
+.pill[data-state='error'] { background: #fde6e7; color: var(--err); }
+
+.field { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+.field select, .field input, .field textarea {
+  /* 16px stops iOS Safari zooming the page when a field gets focus. */
+  min-height: 44px; padding: 8px; border: 1px solid var(--border); border-radius: 8px;
+  font: inherit; font-size: 16px; max-width: 100%; width: 100%; background: var(--card); color: var(--text);
+}
+.field textarea { min-height: 96px; font: 13px/1.4 ui-monospace, Consolas, monospace; resize: vertical; }
+.field .hint { color: var(--muted); font-size: 12px; }
+.field.invalid textarea { border-color: var(--err); }
+.check { display: flex; align-items: center; gap: 10px; min-height: 40px; margin: 2px 0; }
+.check input { width: 20px; height: 20px; flex: none; }
+
+/* SDK option groups */
+.settings details { border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; padding: 0 12px; }
+.settings summary { min-height: 44px; display: flex; align-items: center; font-weight: 600; cursor: pointer; }
+.settings details[open] { padding-bottom: 8px; }
+.settings .unit { display: flex; gap: 8px; align-items: center; }
+.settings .unit span { color: var(--muted); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 8px; border-bottom: 1px solid var(--border); }
+.tab { flex: 1; min-height: 44px; border: none; background: none; padding: 8px 14px; font: inherit; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; }
+.tab[aria-selected='true'] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+#perm-preview { width: 100%; max-height: 200px; background: #000; border-radius: 6px; margin-top: 8px; object-fit: contain; }
+
+.output-grid { display: grid; gap: 12px; }
+.output-grid figure { margin: 0; }
+#output-image { max-width: 100%; max-height: 420px; border: 1px solid var(--border); border-radius: 6px; background: var(--code-bg); display: block; }
+figcaption { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+.code {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px; font: 12px/1.45 ui-monospace, 'Cascadia Code', Consolas, monospace;
+  overflow: auto; max-height: 360px; white-space: pre; margin: 0;
+}
+
+.log { list-style: none; padding: 0; margin: 0; max-height: 520px; overflow: auto; border: 1px solid var(--border); border-radius: 6px; }
+.log-item { border-bottom: 1px solid var(--border); padding: 6px 10px; }
+.log-item.err { background: #fff5f5; }
+.log-item.ok { background: #f2fbf4; }
+.log-item summary { cursor: pointer; font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+.log-item .time { color: var(--muted); }
+.log-item .src { display: inline-block; min-width: 76px; color: var(--accent); }
+.log-item .code { margin-top: 6px; }
+
+/* SDK components render their own full-screen UI. Keep it phone-width and centred: the document
+   component sizes its frame from its host element, so on a wide screen it would otherwise stretch.
+   The transform also makes the host the containing block for the SDK's own fixed-position layers. */
+#sdk-host live-document-camera,
+#sdk-host live-face-camera {
+  position: fixed; top: 0; bottom: 0; left: 50%; width: min(100%, var(--app-width));
+  transform: translateX(-50%); z-index: 1000; background: #fff; overflow: hidden;
+}

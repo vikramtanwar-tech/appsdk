@@ -1,0 +1,12 @@
+# GBG's SDK package: only needed to rebuild sdk/ (see tools/sdk-bundle). Keep it out of git.
+appsdk.tgz
+*.tgz
+
+node_modules/
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

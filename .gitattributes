@@ -1,0 +1,5 @@
+* text=auto
+
+# The SDK bundle must stay byte-for-byte as built: its anti-tamper checks freeze the page if the code
+# changes, and that includes line-ending conversion on checkout. Treat it as binary.
+sdk/** binary

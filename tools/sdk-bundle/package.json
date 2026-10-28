@@ -1,0 +1,13 @@
+{
+  "name": "sdk-bundle",
+  "private": true,
+  "description": "Builds ../../sdk/ from GBG's Smart Capture Web SDK package (../../appsdk.tgz).",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@gbgplc/smartcapture-web": "file:../../appsdk.tgz",
+    "rolldown": "1.2.15"
+  }
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Smart Capture SDK Harness</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='6' fill='%232458d6'/></svg>" />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Smart Capture SDK Harness</h1>
+      <span id="sdk-version" class="pill">SDK loading…</span>
+    </header>
+    <p class="desktop-note">Mobile view. Open this page on a phone to test real captures.</p>
+
+    <main class="layout">
+      <!-- 1. Camera permission -->
+      <section class="card" id="permission-card">
+        <h2>1. Camera permission</h2>
+        <p class="muted">
+          The SDK needs camera access. Grant it here first so you can see the browser state
+          and pick a camera before opening a capture component.
+        </p>
+        <div class="row">
+          <span>Status:</span>
+          <span id="perm-status" class="pill">checking…</span>
+        </div>
+        <div class="row">
+          <button id="perm-request" class="btn primary">Request camera access</button>
+          <button id="perm-recheck" class="btn">Re-check</button>
+        </div>
+        <p id="perm-help" class="help" hidden></p>
+        <label class="field">
+          <span>Camera</span>
+          <select id="camera-select" disabled>
+            <option value="">Grant permission to list cameras</option>
+          </select>
+        </label>
+        <video id="perm-preview" playsinline muted hidden></video>
+      </section>
+
+      <!-- 2. Capture -->
+      <section class="card" id="capture-card">
+        <h2>2. Capture</h2>
+        <div class="tabs" role="tablist">
+          <button role="tab" class="tab" aria-selected="true" data-mode="document">Document</button>
+          <button role="tab" class="tab" aria-selected="false" data-mode="face">Face</button>
+        </div>
+
+        <div data-panel="document">
+          <!-- Filled from SETTINGS in main.js once the SDK has loaded (defaults come from the SDK itself). -->
+          <div class="settings" data-settings="document"></div>
+          <label class="check"><input type="checkbox" id="log-detect" /> Log every detect frame (noisy)</label>
+        </div>
+
+        <div data-panel="face" hidden>
+          <p class="muted">
+            Uses the camera chosen in step 1 (front camera by default on mobile). The face component
+            auto-captures once your face is in position.
+          </p>
+          <div class="settings" data-settings="face"></div>
+          <label class="check"><input type="checkbox" id="log-detect-face" /> Log every detect frame (noisy)</label>
+        </div>
+
+        <p id="settings-warning" class="help" hidden></p>
+        <div class="row">
+          <button id="capture-start" class="btn primary block" disabled>Start capture</button>
+          <button id="capture-stop" class="btn" disabled>Close camera</button>
+          <button id="settings-reset" class="btn" disabled>Reset to SDK defaults</button>
+        </div>
+        <p id="capture-status" class="muted">Waiting for SDK…</p>
+      </section>
+
+      <!-- 3. Output -->
+      <section class="card wide" id="output-card">
+        <div class="row between">
+          <h2>3. SDK output</h2>
+          <div class="row">
+            <button id="copy-json" class="btn" disabled>Copy JSON</button>
+            <button id="download-json" class="btn" disabled>Download JSON</button>
+            <button id="download-image" class="btn" disabled>Download image</button>
+          </div>
+        </div>
+        <p id="output-empty" class="muted">No capture yet. Output of the last <code>capture</code> event appears here.</p>
+        <div id="output" hidden>
+          <div class="output-grid">
+            <figure>
+              <img id="output-image" alt="Captured image" />
+              <figcaption id="output-image-meta"></figcaption>
+            </figure>
+            <div>
+              <h3>Payload shape (types)</h3>
+              <pre id="output-shape" class="code"></pre>
+            </div>
+          </div>
+          <h3>Payload values <span class="muted">(long strings/binary truncated in view; full values in Download JSON)</span></h3>
+          <pre id="output-json" class="code"></pre>
+        </div>
+      </section>
+
+      <!-- 4. Event log -->
+      <section class="card wide">
+        <div class="row between">
+          <h2>4. Event log</h2>
+          <button id="log-clear" class="btn">Clear</button>
+        </div>
+        <p class="muted">Every event the SDK component dispatched, newest first. Click to expand the payload.</p>
+        <ol id="event-log" class="log" reversed></ol>
+      </section>
+    </main>
+
+    <!-- SDK components are mounted here (they render full-screen overlays). -->
+    <div id="sdk-host"></div>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

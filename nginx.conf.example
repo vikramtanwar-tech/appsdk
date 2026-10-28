@@ -1,0 +1,20 @@
+# Example nginx config for hosting this folder at https://<host>/smartcapture/
+# Adjust /var/www/smartcapture/ to wherever the folder is copied.
+
+location /smartcapture/sdk/ {
+    alias /var/www/smartcapture/sdk/;
+    types { text/javascript js; }
+    gzip on;
+    gzip_types text/javascript;
+    # SDK files are large (~28 MB raw) and only change when the SDK is upgraded.
+    expires 30d;
+    add_header Cache-Control "public";
+}
+
+location /smartcapture/ {
+    alias /var/www/smartcapture/;
+    types { text/html html; text/css css; text/javascript js; }
+    gzip on;
+    gzip_types text/css text/javascript;
+    add_header Permissions-Policy "camera=(self)";
+}
